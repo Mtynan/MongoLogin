@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodParser = require("body-parser");
+const errorHandler = require("./handlers/error");
 
 const PORT = 7777;
 
@@ -16,6 +17,8 @@ app.use(function(req, res, next){
     err.status = 404;
     next(err);
 });
+
+app.use(errorHandler);
 
 app.listen(PORT, function(){
     console.log(`Server is starting on port ${PORT}`)
