@@ -28,6 +28,18 @@ userSchema.pre("save", async function (next) {
     }
 });
 
+//every entry we create has this method //compares password in db with the one entered 
+userSchema.methods.comparePassword = async function(candidatePassword, next){
+    try {
+        let isMatch = await bcrypt.compare(candidatePassword, this.password);
+        return isMatch; //returns true or false
+
+    } catch(err){
+        return next(err)
+    }
+};
+
+
 
 const User = mongoose.model("User", userSchema);
 
